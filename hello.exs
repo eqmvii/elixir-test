@@ -40,3 +40,19 @@ defmodule Recursion do
 end
 
 Recursion.print_multiple_times("Hello!", 3)
+
+# Maps, printing maps, using an atom. Dot notation only works when keys are atoms.
+
+person = %{ :first_name => "Eric", "last_name" => "Mancini"}
+
+IO.puts person.first_name <> " " <> person["last_name"]
+
+# Functions!
+
+sum = fn (x, y) -> x + y end
+
+IO.puts sum.(3,4)
+
+greet = fn () -> IO.puts "Hello! Greet function called." end
+
+greet.()

@@ -1,10 +1,6 @@
-Testing various elixir things
+# Elixir notes and tests
 
-Progress: 
-
-Installed/updated erlang (not esl-erlang?)
-
-installed/updated elixir
+## Install / variable notes
 
 export PATH="$PATH:/path/to/elixir/bin" (re-do next time?)
 
@@ -16,7 +12,7 @@ Wrote hello world. Run with:
 $ elixir simple.exs
 '''
 
-Command notes:
+## Commands
 
 start the interactive shell:
 iex
@@ -37,7 +33,7 @@ elixir [program_name.exs]
 compile in iex:
 x "programname.exs"
 
-General notes:
+## Syntax / language notes
 
 Matching makes the left side try to fit the right side
 _ is a wildcard
@@ -72,4 +68,51 @@ Functions are their own type
 
 Atoms: constants that represent something's name
 
-(P22)
+Tuples: bracketed lists of values, usually 2 to 4. Commonly with an :ok return.
+
+Lists: not a lot like arrays in other languages; recursively defined with the tail also being a list.
+* Membership (in)
+* Concatenation ++
+difference -- 
+
+Lists of two-value tuples as a shortcut
+
+Maps: Starts with %, lists of key/value pairs.
+%{ key => value, key => value }
+
+Maps are the main associative array
+
+Truthiness exists! true, false, and nil.
+
+Strict and value equality.
+
+and / or are boolean, || / && are relaxed and treat many arguments as truthy (i.e. not nil or false)
+
+div(a,b) for integer division
+
+## Scope
+
+Lexical scope, local to functions
+
+with keyword: defines local scope
+
+~~~~
+<-
+~~~~
+
+returns unmatched element when inside a with
+
+iex> with [a|_] <- [1,2,3], do: a
+1
+
+The value of with is the value of its "do" parameter at the end
+
+## Functions
+
+fn to create anonymous functions
+
+fn
+   something
+end
+
+(P54)
