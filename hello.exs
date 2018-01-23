@@ -1,5 +1,5 @@
 # hello.exs
-# Hello World in elixir
+# Hello World in elixir, and also testing Elixir functionality from the Dave Thomas book
 # by Eric Mancini
 # Execution:
 # $ elixir hello.exs
@@ -56,3 +56,18 @@ IO.puts sum.(3,4)
 greet = fn () -> IO.puts "Hello! Greet function called." end
 
 greet.()
+
+# Swap as a function
+
+swap = fn {a, b} -> {b, a} end
+
+IO.puts "Swapping 6,8 . . ."
+swapvar = swap.({6,8})
+# IO.puts elem(swapvar, 0) <> ", " <> elem(swapvar, 1)
+IO.puts elem(swapvar, 1)
+IO
+
+# TODO: Look at this
+# https://elixirforum.com/t/convert-a-string-to-an-integer/4784/4
+
+# This is an SSH key test
