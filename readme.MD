@@ -17,6 +17,8 @@ $ elixir simple.exs
 start the interactive shell:
 iex
 
+(REPL - read, evaluate, print, loop)
+
 quit:
 ctrl-c twice, or ctrl-g and then q
 

@@ -168,3 +168,20 @@ IO.puts eph
 
 # Multiple function bodies - may look like multiple definitions, purists will "tell you it's multiple clauses of the same definition"
 # Works via pattern matching: elixir will call the function until it finds a match (must have the same arity)
+
+# IMPORTANT NOTE of multi-function matching recursive programming patterns:
+# Elixir executes /top down/ so order absolutely can matter.
+# Keep multiple instances adjacent
+# If Anchor / base cases aren't first, you'll at least get warnings and might get infinite loops
+
+# Guard class limitations: Only a subset of elixir can go into guard classes 
+# Includes in, some built-in functions, type check functions, join with lieterals, basic arith
+# The type check functions: is_atom is_binary is_bitstring is_boolean is_exception is_float is_function is_integer is_list is_map is_number is_pid is_port is_record is_reference is_tuple
+# The limit to what can go in a guard is to prevent side effects
+
+# Default parameters: param \\ value syntax
+# Like what exists in ES6
+# reads left to right
+
+
+
