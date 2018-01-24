@@ -86,3 +86,36 @@ handle_open = fn
 
   IO.puts "Opening a non-existant file: "
   IO.puts handle_open.(File.open("DoesNotExist.false"))
+
+  IO.puts("# # # # # # # # # # # #")
+
+  # functions can return functions
+
+  funfun = fn -> fn -> "hello, returned function called" end end
+
+  funteststring = funfun.().()
+  IO.puts funteststring
+
+  # function scope / closure is like JavaScript - scope encloses the bindings of its variables, keeping them available for later.
+
+  greeter = fn name -> (fn -> "Hello #{name}" end) end
+  david_greeter = greeter.("David")
+  greeterstring = david_greeter.()
+  IO.puts greeterstring
+
+  prefix = fn pref -> (fn name -> "Hello #{pref} #{name}" end) end
+  prefname = prefix.("Mr.").("Mancini")
+  IO.puts prefname
+
+  # pins (^) can be used to make sure variables are used at current value instead of being assignable / overwriteable
+
+  # Shorter helper functions can have shortcuts: &
+
+  # The & operator converts the function that follows into a function. Placeholders &1, &2 etc. correspond to the first, second, and subsequence params. 
+
+  # Ex.: &(&1 + &2) is converted to p1, p2 -> p1 + p2 end
+
+  # Common usage: passing functions to other functions
+
+  # Ex.: Enum.map [1,2,3,4], &(&1 + 1) yields [2,3,4,5]; Enum.map [1,2,3,4], &(&1 + 2) yields [3, 4, 5, 6]
+  # Ex.: Enum.map [1,2,3,4], &(&1 < 3)

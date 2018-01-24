@@ -75,6 +75,12 @@ Lists: not a lot like arrays in other languages; recursively defined with the ta
 * Concatenation ++
 difference -- 
 
+From SO: 
+
+"The way to think about it is that Lists are open-ended data structures and their size can vary at runtime while Tuples have a constant size set at compile time."
+
+Tuples should be thought of as single pieces of data, not things to be iterated over.
+
 Lists of two-value tuples as a shortcut
 
 Maps: Starts with %, lists of key/value pairs.
@@ -115,4 +121,4 @@ fn
    something
 end
 
-(P54)
+(P49 on list, 64 of 348 @ Function Calls and Pattern Matching)
