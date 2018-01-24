@@ -4,6 +4,7 @@
 # Execution:
 # $ elixir hello.exs
 
+IO.puts "# # # Begin Elixir Test" <> "ing Program Output # # #"
 IO.puts "Hello world" <> " from Elixir!"
 
 # testing some math, binding, and immutability
@@ -119,3 +120,51 @@ handle_open = fn
 
   # Ex.: Enum.map [1,2,3,4], &(&1 + 1) yields [2,3,4,5]; Enum.map [1,2,3,4], &(&1 + 2) yields [3, 4, 5, 6]
   # Ex.: Enum.map [1,2,3,4], &(&1 < 3)
+
+  # Some basic boolean stuff
+
+  abcd = 56
+
+  if abcd >= 56 do
+    IO.puts "It was true!"
+    else 
+    IO.puts "It was false!"
+  end
+  
+  # Pattern matching conditionals
+  
+  # `case` allows us to compare a value against many patterns
+  case {:one, :two} do
+  {:four, :five} ->
+    "This won't match"
+    {:one, x} ->
+    "This will match and bind `x` to `:two` in this clause"
+  _ ->
+    "This will match any value"
+end
+
+# Modularizing things modularely, generally
+
+
+# You can group several functions into a module. Inside a module use `def`
+# to define your functions.
+# (from learnxinyminutes)
+defmodule TestMath do
+  def sum(a, b) do
+    a + b
+  end
+
+  def square(x) do
+    x * x
+  end
+end
+
+eph = TestMath.sum(1, 2)  #=> 3
+IO.puts eph
+eph = TestMath.square(3) #=> 9
+IO.puts eph
+
+# Guards: can be used to ensure only certain input is sent to and used by a function
+
+# Multiple function bodies - may look like multiple definitions, purists will "tell you it's multiple clauses of the same definition"
+# Works via pattern matching: elixir will call the function until it finds a match (must have the same arity)
