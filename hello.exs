@@ -183,5 +183,47 @@ IO.puts eph
 # Like what exists in ES6
 # reads left to right
 
+# private functions: defp defines a private function that can only be called within the module declaring it. 
 
+# the pipe operator: |> takes the output of one function and throws it at another
+# explicitly: takes teh result of the expression to its left and inserts it as the FIRST param of the function on the right
+# Ex.: val |> f(a,b) is basically the same thing as f(val, a, b)
+# Separate lines is fine, so is chaining them
 
+IO.puts "Testing the pipe operator:"
+
+eph = (1..10) |> Enum.map(&(&1*&1)) |> Enum.filter(&(&1 < 40))
+IO.inspect eph
+
+# parentheses around function parameters in pipelines are very important
+# Functional programming transforms data, the |> operator makes those transformations explicit
+
+# Modules: providing namespaces and wrapping macros, structus, protocols, and other modules
+# prefixes needed to ref inner module code from outside, but not from inside
+
+defmodule Mod do
+  def func1 do
+    IO.puts "in func1"
+  end
+  def func2 do
+    IO.puts "in func2"
+  end
+end
+
+Mod.func1
+Mod.func2
+
+defmodule Outer do
+  defmodule Inner do
+    def inner_func do
+    IO.puts "Outer inner inner called"
+    end
+  end
+
+  def outer_func do
+    Inner.inner_func
+  end
+end
+
+Outer.outer_func
+Outer.Inner.inner_func
