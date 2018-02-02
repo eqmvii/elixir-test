@@ -228,4 +228,4 @@ end
 Outer.outer_func
 Outer.Inner.inner_func
 
-# new computer git test
+# A note on lists: lists always end with an empty list, in truly recursive / linked list fashion.
