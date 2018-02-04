@@ -3,6 +3,7 @@
 # including keeping track of the sum
 # without an additional parameters on the outer function
 
+
 defmodule MyList do
     
     def sum(list), do: _sum(list, 0)
