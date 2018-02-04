@@ -229,3 +229,11 @@ Outer.outer_func
 Outer.Inner.inner_func
 
 # A note on lists: lists always end with an empty list, in truly recursive / linked list fashion.
+
+defmodule PipeTest do
+  def inc(x) do 
+    x + 1
+  end
+end
+
+IO.puts PipeTest.inc 4 |> PipeTest.inc |> PipeTest.inc
