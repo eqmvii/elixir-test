@@ -304,12 +304,27 @@ IO.puts a_name
 # put_in is not magic! It is a macro that generates long-winded code to match and update more deeply in the struct
 # Also exist: get_in and get_and_update_in 
 
-# this code not behaving as expected?
-# commands work logically in iex...
 IO.puts "Company, before put_in: "
 report = %{ owner: %{ name: "Dave", company: "Pragmatic" }, severity: 1}
 IO.puts report.owner.company
-# put_in(report[:owner][:company], "Dragon")
-put_in(report.owner.company, "Dragon")
+# Note the return = at the beginning here. Functional language, so nothing is ever modified in place.
+# report = put_in(report[:owner][:company], "Dragoooon")
+report = put_in(report.owner.company, "Walrus")
 IO.puts "Company, after put_in update: "
-IO.puts report.owner.company
+IO.inspect report
+
+# IO.inspect is basically IO.puts for more complex data types
+
+# maps and structs are dictionary types
+
+# Sets are implemented via the MapSet module
+
+# With great power comes great temptation. DO NOT USE STRUCTS FOR OBJECT ORIENTED PARADIGM CODING.
+
+# What are types?
+
+# Keyword is a type, for example, but on an implementation level it is a list of tuples. List functions still work on it.
+
+# Processing Collections - Enum & Stream. CHapter 10, page 95
+
+# Things that can be iterated implement Enumerable protocol
