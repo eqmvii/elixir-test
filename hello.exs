@@ -237,3 +237,56 @@ defmodule PipeTest do
 end
 
 IO.puts PipeTest.inc 4 |> PipeTest.inc |> PipeTest.inc
+
+# Let's learn about maps!
+
+# Using @ variables at the start of a function to define defaults or some such is good behavior / a common pattern 
+
+myMap = %{name: "Dave", likes: "Programming"}
+Map.keys myMap 
+# [ :likes, :name ]
+
+IO.puts Map.values myMap
+# ProgrammingDave
+
+IO.puts myMap[:name]
+
+map1 = Map.drop myMap, [:likes]
+IO.puts Map.values map1
+# "Dave"
+
+map2 = Map.put myMap, :alslo_likes, "Ruby"
+IO.puts Map.values map2
+# RubyProgrammingDave
+
+IO.puts Map.has_key? map1, :where 
+# false
+
+IO.puts Map.has_key? map1, :name
+# true
+
+IO.puts " "
+
+# Maps and pattern matching: We most often ask our maps if they have certain keys, values, or key-value pairs.
+
+person = %{ name: "Dave", height: 1.88 }
+
+%{ name: a_name } = person
+IO.puts a_name
+# "Dave"
+
+# Are there name and key entries?
+%{ name: _, height: _ } = person
+# Match fail, for example looking for weight, would cause a compiler failure
+
+# destructuring and for 
+# the for allows you to pattern match your way through a list. Has a filter and a generator clause.
+
+# simple map updating:
+
+# new_map = %{old_map | key => value,... }
+# this will only update the k/v pairs on the right side of the map. Handy!
+
+# What are maps? %{}
+
+# What are structs? More rigid maps, with defaults and/or fixed types.
