@@ -290,3 +290,26 @@ IO.puts a_name
 # What are maps? %{}
 
 # What are structs? More rigid maps, with defaults and/or fixed types.
+# A struct is just a module that wraps a limited form of a map.
+
+# see defstruct.exs for an example. It's a module wrapping concepts of the struct.
+# Fields can be accessed via dot notation or by pattern matching. 
+# The name of the module is the name of the map type.
+
+# structs are wrapped in a module because you are likely to want to add struct-specific behavior
+# Compile time checks + default values + bundled functions. Be careful about treating it like
+# an entry to object oriented thinking, designing, or coding!
+
+# nested dictionaries have helpers, like put_in
+# put_in is not magic! It is a macro that generates long-winded code to match and update more deeply in the struct
+# Also exist: get_in and get_and_update_in 
+
+# this code not behaving as expected?
+# commands work logically in iex...
+IO.puts "Company, before put_in: "
+report = %{ owner: %{ name: "Dave", company: "Pragmatic" }, severity: 1}
+IO.puts report.owner.company
+# put_in(report[:owner][:company], "Dragon")
+put_in(report.owner.company, "Dragon")
+IO.puts "Company, after put_in update: "
+IO.puts report.owner.company
