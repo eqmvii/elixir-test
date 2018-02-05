@@ -328,3 +328,84 @@ IO.inspect report
 # Processing Collections - Enum & Stream. CHapter 10, page 95
 
 # Things that can be iterated implement Enumerable protocol
+
+# A broad overview of things that Enum can do for you:
+
+'''
+Turn collections into lists
+Concatenate c ollections
+Create collections whose elements are some function of the original 
+A million other things
+'''
+
+# slick example of using collections and for to do a deck of cards
+IO.puts "Deck of cards example: "
+deck = for rank <- '23456789TJQK', suit <- 'CHDS', do: [suit, rank]
+IO.inspect deck
+
+# Shuffle and such
+hand = deck |> Enum.shuffle |> Enum.take(5)
+
+# Piping and introducing streams
+
+prestreamlist = [1,2,3,4,5]
+Enum.map(prestreamlist, &(&1*&1)) |> Enum.with_index |> Enum.map(fn {value, index} -> value - index end) |> IO.inspect
+
+# Observe that piping sends things into the next function as the first argument
+# Here Enum is taking and also returning a collection, which is insufficiently efficient
+# Streams allow for passing things directly without creating intermediate lists
+# That is efficient and important! 
+
+# A stream is a composable enumerator 
+s = Stream.map [1,3,5,7], &(&1 + 1)
+#Stream<[enum: [1, 3, 5, 7], funs: [#Function<48.71542911/1 in Stream.map/2>]]>
+
+# To get that back to a useable list, feed it to Enum
+quaileggs = Enum.to_list s
+IO.inspect quaileggs
+
+# Streams can be passed to streams, and as such are composable
+
+# Streams are !$&^ magic. THis would take 8 seconds to run:
+# Enum.map(1..10_000_000, &(&1+1)) |> Enum.take(5)
+# whereas this takes imperceptible time:
+# Stream.map(1..10_000_000, &(&1+1)) |> Enum.take(5) 
+
+# readibility note: yes, large numbers can contain underscors to make it more visually obvious
+# that they are really gigantic. It should be pure symantics/style, however.
+
+# Lots of infinite and looping and iterating use cases of streams exist
+
+# Here have some code 
+# Stream.iterate(0, &(&1+1)) |> Enum.take(500)
+
+# unfold takes an initial value and a function. It then returns a value and passes another forward into a potential infinite stream
+# Stream.unfold({0,1}, fn {f1,f2} -> {f1, {f2, f1+f2}} end) |> Enum.take(15)
+# Stream.resource takes it even further.
+
+# The Collectable Protocol - the opposite of Enumerable, which gets elements/items from collections.
+# Colectable lets the user build collections from elements/items.
+
+# Comprehensions: Elixir life-make-easier / shortcut for map and filter commands on collections of things
+# Example:
+
+IO.puts "Filtering and maping examples"
+for x <- [1,2,3,4,5], do: IO.puts x * x
+for x <- [1,2,3,4,5], x < 4, do: IO.puts x * x
+
+# generator specifies extraction from a collection
+# pattern <- enumerable_thing
+# Multiple generators nest instead of paraleliterate
+
+# Complex example:
+
+first8 = [1,2,3,4,5,6,7,8]
+for x <- first8, y <- first8, x >= y, rem(x*y, 10)==0, do: IO.inspect {x,y}
+# That will show every x,y combo from 1 to 8 for each of x and y where x is larger than y and they multiply together to a multiple of 10
+# how many times does this iterate? 64 - it nests through 1 and 8 in each direction.
+# First term in a generator is a pattern and as such can be used to deconstruct 
+
+# recursion and enumeration
+# It's fun to recurse for recursions sake, but day-to-day work is best done with enumerators built into Elixir
+# That might mean recursion under the hood, but it doesn't require writing freshly recursive code routinely.
+# Dave thomas recommends enumerating whenever possible and he wrote the book, so.
