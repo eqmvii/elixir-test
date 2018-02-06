@@ -389,7 +389,7 @@ IO.inspect quaileggs
 # Comprehensions: Elixir life-make-easier / shortcut for map and filter commands on collections of things
 # Example:
 
-IO.puts "Filtering and maping examples"
+IO.puts "\nFiltering and maping examples\n"
 for x <- [1,2,3,4,5], do: IO.puts x * x
 for x <- [1,2,3,4,5], x < 4, do: IO.puts x * x
 
@@ -409,3 +409,57 @@ for x <- first8, y <- first8, x >= y, rem(x*y, 10)==0, do: IO.inspect {x,y}
 # It's fun to recurse for recursions sake, but day-to-day work is best done with enumerators built into Elixir
 # That might mean recursion under the hood, but it doesn't require writing freshly recursive code routinely.
 # Dave thomas recommends enumerating whenever possible and he wrote the book, so.
+
+IO.puts "\nStrings and Binaries\n"
+# Single vs. double quoted strings
+# interpolation: #{}
+
+interponame = "Eric"
+IO.puts "Hello #{interponame} how are you today"
+
+# excaping can happen with a backslash
+# strings can span several lines. IO.write doesn't append new lines
+
+IO.puts "Start"
+IO.write "
+  my
+  st
+  ring
+  "
+
+IO.puts "End."
+
+# heredoc notation fixes this though. So hooray! Use triple quotation marks and indentation to accomplish that.
+# heredoc notation is used for documentation on functions and modules
+
+# sigils are symbols with magical power. tilde, letter, content, and options. Examples:
+# C is no escape/interp, c is single qupte string, D is date, N is native date, R  and r do regexp, S and s change escape, T is time, etc. 
+# You can even define your own, because of course you can.
+
+# Strings vs. character lists
+# In Elixir, only double quotes create strings. Single quotes create, instead, character lists.
+# The libraries and usages can be very different. Single quoted are just lists of character codes.
+
+str = 'wombat'
+IO.puts is_list str
+IO.puts length str
+IO.puts Enum.reverse str
+IO.puts [ 67, 65, 84 ]
+# CAT
+
+# See that iex is treating any list of integers that could be character codes as though they for sure are when it comes to printing
+# if characters are considered nonprintable, then IEX will default to the list-of-integers interpretation 
+# Because a character list is a real list, pattern matching list functionality will work.
+
+'pole' ++ 'vault' # polevault
+# "pole" ++ "vault" # ArgumentError
+'pole' -- 'vault' # poe
+[head | tail ] = 'cat' # [ c | at ] -> 'cat'
+head # 99, since cat is an integer list and 99 is c
+?c # 99, returns the char code
+
+# binaries represent sequences of bits
+b = << 1, 2, 3 >>
+IO.inspect b
+IO.puts byte_size b # 3
+IO.puts bit_size b # 24
