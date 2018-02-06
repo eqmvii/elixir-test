@@ -1,24 +1,47 @@
+<!-- 
+
+fizzbuzzjs.html
+
+An example of FizzBuzz, written in JavaScript but using functional programming concepts.
+(1) All variables are constants
+(2) No traditional loops (for, while, etc.) are used
+(3) Iterative work is accomplished via recursion
+
+Adapted from the fizzbuzz.ex example on page 130 in Programming Elixir v 1.3 by Dave Thomas
+
+FizzBuzz, define from http://wiki.c2.com/?FizzBuzzTest -
+Write a program that prints the numbers from 1 to 100. 
+But for multiples of three print “Fizz” instead of the number and for the multiples of five print “Buzz”. 
+For numbers which are multiples of both three and five print “FizzBuzz”.
+    
+-->
+
+<!DOCTYPE html>
 <html>
+
     <head>
         <title>Functional FizzBuzz Printer</title>
-
     </head>
+
     <body>
-        <h3>This is the functional fizzbuzz printer of your dreams</h1>
+        <h3>FizzBuzz printer using functional programming concepts</h3>
         <hr>
+        <!-- FizzBuzz output will be dumped here-->
     </body>
+
     <script>
-        let max_num = parseInt(prompt("How many fizz buzzes would you like?"), 10);
-        console.log(max_num);
+        const max_num = parseInt(prompt("How many fizz buzzes would you like?"), 10);
         fizzbuzz(max_num);
 
         function fizzbuzz() {
-            console.log("I got called with " + max_num);
-            let buzz_nums = _fizzbuzz(1, max_num, []);
+            console.log("fizzbuzz called; print fizzbuzz numbers up to " + max_num);
+            const buzz_nums = _fizzbuzz(1, max_num, []);
             document.write(buzz_nums);
         }
 
         function _fizzbuzz(cur, remaining, results) {
+            console.log(`Recursive function called with ${cur} as cur, ${remaining} as remaining, and ${results.length} array items so far.`);
+
             // base case
             if (remaining === 0) {
                 console.log("All done! Results: ");
@@ -27,7 +50,7 @@
             }
 
             // recursive case
-            let new_results = results.slice();
+            const new_results = results.slice();
             if (cur % 3 == 0 && cur % 5 == 0) {
                 new_results.push("FizzBuzz");
             }
@@ -38,10 +61,13 @@
                 new_results.push("Buzz");
             }
             else {
-                new_results.push(cur);
+                new_results.push(cur.toString(10));
             }
+            // recursive call to accomplish iteration - cur increases by one, 
+            // remaining decreases by one, and the new_results array is passed along
             return _fizzbuzz(cur + 1, remaining - 1, new_results);
         }
 
     </script>
+
 </html>
