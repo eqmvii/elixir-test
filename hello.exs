@@ -409,3 +409,5 @@ for x <- first8, y <- first8, x >= y, rem(x*y, 10)==0, do: IO.inspect {x,y}
 # It's fun to recurse for recursions sake, but day-to-day work is best done with enumerators built into Elixir
 # That might mean recursion under the hood, but it doesn't require writing freshly recursive code routinely.
 # Dave thomas recommends enumerating whenever possible and he wrote the book, so.
+
+# edit for shell script test
