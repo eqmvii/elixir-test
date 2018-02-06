@@ -463,3 +463,4 @@ b = << 1, 2, 3 >>
 IO.inspect b
 IO.puts byte_size b # 3
 IO.puts bit_size b # 24
+# edit for shell script test
