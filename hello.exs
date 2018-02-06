@@ -4,6 +4,10 @@
 # Execution:
 # $ elixir hello.exs
 
+# file extension types with elixir:
+# .exs is an elixir script file, and is interpreted
+# .ex is a compiled elixir file
+
 IO.puts "# # # Begin Elixir Test" <> "ing Program Output # # #"
 IO.puts "Hello world" <> " from Elixir!"
 
@@ -499,3 +503,15 @@ end
 
 # cond executes code after looking for that which is truthy 
 # a series of conditions and you choose the one that is truthy to do
+
+# case - testing values against patterns, first match gets a return. Includes guard clauses
+
+# Raising exceptions:
+# in Elixir, exceptions are things that should literally never happen. They are not boolean-style control flow operations.
+# simple form:
+# raise "giving up"
+# produces
+# ** (RuntimeError) giving up
+
+# error convention: trailing exclamation mark means failure will raise a meaningful exception, and that's all that's needed
+# many built in functions have a normal form that returns a status touble and an ! form that raises and exception upon failure
