@@ -1,17 +1,25 @@
 # fizzbuzz.exs
-# Write a function that takes three arguments. 
-# If the first two are zero, return fizzbuzz. 
-# If the first is zero, return Fizz. 
-# If the second is zero, return "buzz." Otherwise return the third argument.
+# doing fizzbuzz, in elixir, with the cond macro
 
-fizzbuzz = fn 
-    {0, 0, _} -> "FizzBuzz"
-    {0, _, _} -> "Fizz"
-    {_,0,_} -> "Buzz"
-    {_,_,a} -> a
+defmodule FizzBuzz do
+    
+    def upto(n) when n > 0, do: _upto(1, n, [])
+
+    def _upto(_current, 0, result), do: Enum.reverse result
+
+    def _upto(current, remaining, result) do
+        next_answer = 
+            cond do
+                rem(current, 3) == 0 and rem(current, 5) == 0 ->
+                    "FizzBuzz"
+                rem(current, 3) == 0 ->
+                    "Fizz"
+                rem(current, 5) == 0 ->
+                    "Buzz"
+                # a default case
+                true ->
+                    current
+            end
+            _upto(current+1, remaining-1, [next_answer | result ])
     end
-
-IO.puts(fizzbuzz.({0,0,0}))
-IO.puts(fizzbuzz.({0,8,1}))
-IO.puts(fizzbuzz.({1,0,1}))
-IO.puts(fizzbuzz.({1,2,2}))
+end

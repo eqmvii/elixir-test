@@ -1,0 +1,47 @@
+<html>
+    <head>
+        <title>Functional FizzBuzz Printer</title>
+
+    </head>
+    <body>
+        <h3>This is the functional fizzbuzz printer of your dreams</h1>
+        <hr>
+    </body>
+    <script>
+        let max_num = parseInt(prompt("How many fizz buzzes would you like?"), 10);
+        console.log(max_num);
+        fizzbuzz(max_num);
+
+        function fizzbuzz() {
+            console.log("I got called with " + max_num);
+            let buzz_nums = _fizzbuzz(1, max_num, []);
+            document.write(buzz_nums);
+        }
+
+        function _fizzbuzz(cur, remaining, results) {
+            // base case
+            if (remaining === 0) {
+                console.log("All done! Results: ");
+                console.log(results);
+                return results;
+            }
+
+            // recursive case
+            let new_results = results.slice();
+            if (cur % 3 == 0 && cur % 5 == 0) {
+                new_results.push("FizzBuzz");
+            }
+            else if (cur % 3 == 0) {
+                new_results.push("Fizz");
+            }
+            else if (cur % 5 == 0) {
+                new_results.push("Buzz");
+            }
+            else {
+                new_results.push(cur);
+            }
+            return _fizzbuzz(cur + 1, remaining - 1, new_results);
+        }
+
+    </script>
+</html>

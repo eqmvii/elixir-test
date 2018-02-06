@@ -464,3 +464,38 @@ IO.inspect b
 IO.puts byte_size b # 3
 IO.puts bit_size b # 24
 # edit for shell script test
+
+# String as a technical term really does mean string, as in a double quoted string.
+# String module is for double quoted strings only
+# grapheme: small unit of writing
+# A number of useful library methods exist for manipulating strings - caps, location, reverse, etc. 
+# lowercase is downcase because of course it is.
+# jaro_distance uses magic to determine how similar two strings are
+
+IO.puts String.replace "the cat on the mat", "at", "WALRUS!!!!"
+# "the cWALRUS!!!! on the mWALRUS!!!!"
+
+# Control flow
+IO.puts "\nControl Flow: Coming later because we use if less due to pattern matching and multi-arity functions\n"
+
+# Elixir code tries to be declarative, not imperative 
+# Small functions, guard clauses, and pattern matching /replaces most control flow/
+# Pattern matching is the functional alternative to if/else/etc. control flow
+# Functions without control flow are easier to test, read, and reuse. 
+# 10 or 20 line elixir function? It probably has a construct and can probably be shortened/undone.
+
+# if and else, under the hood:
+# if and the evil twin unless take a condition and a /keyword list/. The do: keyword list code is executed on true,
+# the else: keyword list is executed otherwise. The else: branch isn't necessary. 
+# Syntax highlighting can throw you off, it's actually very basic and simple.
+
+if 1 == 1, do: IO.puts "true part", else: "false part"
+# if and else then have syntactic sugar that look like function declarations
+if 1 == 1 do
+  IO.puts "true part"
+else
+  IO.puts "false part"
+end
+
+# cond executes code after looking for that which is truthy 
+# a series of conditions and you choose the one that is truthy to do
