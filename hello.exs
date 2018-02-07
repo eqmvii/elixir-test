@@ -505,6 +505,7 @@ end
 # a series of conditions and you choose the one that is truthy to do
 
 # case - testing values against patterns, first match gets a return. Includes guard clauses
+# Case is extremely powerful because of pattern matching. JavaScript has switch/case but it isn't nearly as cool and doesn't do this.
 
 # Raising exceptions:
 # in Elixir, exceptions are things that should literally never happen. They are not boolean-style control flow operations.
@@ -515,3 +516,24 @@ end
 
 # error convention: trailing exclamation mark means failure will raise a meaningful exception, and that's all that's needed
 # many built in functions have a normal form that returns a status touble and an ! form that raises and exception upon failure
+
+# The philosophy of pipe: instead of deeply nested things where you have to understand them right-to-left and inside-out,
+# pipe allows you to see the natural flow of data along a path of transformation.
+
+# Tools, tooling and projects
+
+# mix is the BUILD TOOL for Elixir projects
+# hex is the PACKAGE MANAGER
+
+# mix copies external libraries into the project's directory structure. 
+# be aware of OTP and mix.exs configurations for OTP application. 
+# Many things that would be libraries in other languages/paradigms
+# are actually subapplications, such that the entire app 
+# is actually a suite of cooperating subapplications
+# Think: components or services
+
+# config.exs will eventually contain key/value pairs of configuration variables for the application.
+
+# Pattern matching as a test using a question mark:
+# A pattern match with a question mark at the end will do the thing if it matches, and otherwise fail silently if it doesn't. 
+# There is a chance this is phoenix specific?
