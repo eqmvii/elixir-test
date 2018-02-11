@@ -4,6 +4,10 @@
 # Execution:
 # $ elixir hello.exs
 
+# file extension types with elixir:
+# .exs is an elixir script file, and is interpreted
+# .ex is a compiled elixir file
+
 IO.puts "# # # Begin Elixir Test" <> "ing Program Output # # #"
 IO.puts "Hello world" <> " from Elixir!"
 
@@ -389,7 +393,7 @@ IO.inspect quaileggs
 # Comprehensions: Elixir life-make-easier / shortcut for map and filter commands on collections of things
 # Example:
 
-IO.puts "Filtering and maping examples"
+IO.puts "\nFiltering and maping examples\n"
 for x <- [1,2,3,4,5], do: IO.puts x * x
 for x <- [1,2,3,4,5], x < 4, do: IO.puts x * x
 
@@ -410,4 +414,126 @@ for x <- first8, y <- first8, x >= y, rem(x*y, 10)==0, do: IO.inspect {x,y}
 # That might mean recursion under the hood, but it doesn't require writing freshly recursive code routinely.
 # Dave thomas recommends enumerating whenever possible and he wrote the book, so.
 
+IO.puts "\nStrings and Binaries\n"
+# Single vs. double quoted strings
+# interpolation: #{}
+
+interponame = "Eric"
+IO.puts "Hello #{interponame} how are you today"
+
+# excaping can happen with a backslash
+# strings can span several lines. IO.write doesn't append new lines
+
+IO.puts "Start"
+IO.write "
+  my
+  st
+  ring
+  "
+
+IO.puts "End."
+
+# heredoc notation fixes this though. So hooray! Use triple quotation marks and indentation to accomplish that.
+# heredoc notation is used for documentation on functions and modules
+
+# sigils are symbols with magical power. tilde, letter, content, and options. Examples:
+# C is no escape/interp, c is single qupte string, D is date, N is native date, R  and r do regexp, S and s change escape, T is time, etc. 
+# You can even define your own, because of course you can.
+
+# Strings vs. character lists
+# In Elixir, only double quotes create strings. Single quotes create, instead, character lists.
+# The libraries and usages can be very different. Single quoted are just lists of character codes.
+
+str = 'wombat'
+IO.puts is_list str
+IO.puts length str
+IO.puts Enum.reverse str
+IO.puts [ 67, 65, 84 ]
+# CAT
+
+# See that iex is treating any list of integers that could be character codes as though they for sure are when it comes to printing
+# if characters are considered nonprintable, then IEX will default to the list-of-integers interpretation 
+# Because a character list is a real list, pattern matching list functionality will work.
+
+'pole' ++ 'vault' # polevault
+# "pole" ++ "vault" # ArgumentError
+'pole' -- 'vault' # poe
+[head | tail ] = 'cat' # [ c | at ] -> 'cat'
+head # 99, since cat is an integer list and 99 is c
+?c # 99, returns the char code
+
+# binaries represent sequences of bits
+b = << 1, 2, 3 >>
+IO.inspect b
+IO.puts byte_size b # 3
+IO.puts bit_size b # 24
 # edit for shell script test
+
+# String as a technical term really does mean string, as in a double quoted string.
+# String module is for double quoted strings only
+# grapheme: small unit of writing
+# A number of useful library methods exist for manipulating strings - caps, location, reverse, etc. 
+# lowercase is downcase because of course it is.
+# jaro_distance uses magic to determine how similar two strings are
+
+IO.puts String.replace "the cat on the mat", "at", "WALRUS!!!!"
+# "the cWALRUS!!!! on the mWALRUS!!!!"
+
+# Control flow
+IO.puts "\nControl Flow: Coming later because we use if less due to pattern matching and multi-arity functions\n"
+
+# Elixir code tries to be declarative, not imperative 
+# Small functions, guard clauses, and pattern matching /replaces most control flow/
+# Pattern matching is the functional alternative to if/else/etc. control flow
+# Functions without control flow are easier to test, read, and reuse. 
+# 10 or 20 line elixir function? It probably has a construct and can probably be shortened/undone.
+
+# if and else, under the hood:
+# if and the evil twin unless take a condition and a /keyword list/. The do: keyword list code is executed on true,
+# the else: keyword list is executed otherwise. The else: branch isn't necessary. 
+# Syntax highlighting can throw you off, it's actually very basic and simple.
+
+if 1 == 1, do: IO.puts "true part", else: "false part"
+# if and else then have syntactic sugar that look like function declarations
+if 1 == 1 do
+  IO.puts "true part"
+else
+  IO.puts "false part"
+end
+
+# cond executes code after looking for that which is truthy 
+# a series of conditions and you choose the one that is truthy to do
+
+# case - testing values against patterns, first match gets a return. Includes guard clauses
+# Case is extremely powerful because of pattern matching. JavaScript has switch/case but it isn't nearly as cool and doesn't do this.
+
+# Raising exceptions:
+# in Elixir, exceptions are things that should literally never happen. They are not boolean-style control flow operations.
+# simple form:
+# raise "giving up"
+# produces
+# ** (RuntimeError) giving up
+
+# error convention: trailing exclamation mark means failure will raise a meaningful exception, and that's all that's needed
+# many built in functions have a normal form that returns a status touble and an ! form that raises and exception upon failure
+
+# The philosophy of pipe: instead of deeply nested things where you have to understand them right-to-left and inside-out,
+# pipe allows you to see the natural flow of data along a path of transformation.
+
+# Tools, tooling and projects
+
+# mix is the BUILD TOOL for Elixir projects
+# hex is the PACKAGE MANAGER
+
+# mix copies external libraries into the project's directory structure. 
+# be aware of OTP and mix.exs configurations for OTP application. 
+# Many things that would be libraries in other languages/paradigms
+# are actually subapplications, such that the entire app 
+# is actually a suite of cooperating subapplications
+# Think: components or services
+
+# config.exs will eventually contain key/value pairs of configuration variables for the application.
+
+# Pattern matching as a test using a question mark:
+# A pattern match with a question mark at the end will do the thing if it matches, and otherwise fail silently if it doesn't. 
+# There is a chance this is phoenix specific?
