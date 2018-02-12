@@ -493,13 +493,13 @@ IO.puts "\nControl Flow: Coming later because we use if less due to pattern matc
 # the else: keyword list is executed otherwise. The else: branch isn't necessary. 
 # Syntax highlighting can throw you off, it's actually very basic and simple.
 
-if 1 == 1, do: IO.puts "true part", else: "false part"
+# if 1 == 1, do: IO.puts "true part", else: "false part"
 # if and else then have syntactic sugar that look like function declarations
-if 1 == 1 do
-  IO.puts "true part"
-else
-  IO.puts "false part"
-end
+# if 1 == 1 do
+#   IO.puts "true part"
+# else
+#   IO.puts "false part"
+# end
 
 # cond executes code after looking for that which is truthy 
 # a series of conditions and you choose the one that is truthy to do
@@ -537,3 +537,104 @@ end
 # Pattern matching as a test using a question mark:
 # A pattern match with a question mark at the end will do the thing if it matches, and otherwise fail silently if it doesn't. 
 # There is a chance this is phoenix specific?
+
+# Keyword lists, revisited, now with more specificity:
+# A list of tuples where the first item in each tuple is an item can be sugared into a keyword list. Example:
+
+a = [{:name, "Eric" }, {:Age, 30 }, {:tall, :no} ]
+IO.inspect a
+# [name: "Eric", Age: 30, tall: :no]
+b = [name: "Eric", Age: 30, tall: :no]
+IO.inspect a == b
+# true
+c = [{:name, "Eric"}, {:age, 30}, {"Eric", "David", "Martin"}]
+IO.inspect c
+# [{:name, "Eric"}, {:age, 30}, {"Eric", "David", "Martin"}]
+# See that because the keyword list doesn't exactly respect the rules, the automatic covnversion can't / doesn't happen
+
+# keyword lists have limitations: they approximate pure key-value pairing data structures as in other programming languages, but require all keys to be atoms.
+# If keys cannot simply be atoms, then a real map is required 
+
+# Now, then, to revisit: what are tuples?
+# tuples are lists of values stored in curly braces like so {}
+# But critically, they are contiguous blocks of memory, and so can be accessed via elem
+
+tuple_test = {"hello", 24, :charlie, [1,2,3]}
+IO.inspect elem(tuple_test, 0)
+# "hello"
+IO.inspect elem(tuple_test, 1)
+# 24
+IO.inspect elem(tuple_test, 2)
+# :charlie
+IO.inspect elem(tuple_test, 3)
+# [1, 2, 3]
+IO.inspect tuple_size(tuple_test)
+# 4
+
+# when and why on tuples? often enriched values, values that have some additional context/status information associated with them
+
+# Magic in the enumerable protocol:
+
+# The enumerable protocol requires just three functions: count(collection), member?(collection, value) and reduce(collection, acc, fun).
+# If that protocol is implemented, then all of the built in Enum functions can work, and that's honestly seriously cool
+# returning an error for member is actually OK and signifies no quick way to proceed, leaving enumerable code to do a linear search
+
+# As for reduce: some magic is included to handle the case of streams. The accumulator itself is a tuple, the first element of which is :cont, :halt or :suspend
+# the second is the actual accumulator value.
+# The value of reduce itself is also a tuple include its state: :done, :halted, or :suspended
+
+# But what about the other way - implementing the collectable protocol allows for some built-in functions to work in reverse,
+# i.e. Enum.into 
+
+# Why the complexity in the enumerable/collectable protocols?
+# Because it allows eager and lazy, i.e. enum and stream, implementations. Complicated, but powerful!
+
+# umbrella projects and apps: 
+# a mix project made with --umbrella creates an apps folder, and then individual mix projects can be made inside of thee apps folder
+# The "app" name is probably wrong, it's much more like a shared library than it is like a full singular application
+
+# revisiting error handling: exceptions are raised, but rarely caught. Processess should just die, and then be dead, supervised, restarted, etc.
+# Exceptions should be reservee for things that are "truly exceptional" - i.e. rare, basically never happen, etc.
+
+# iex 
+# raise "Giving up"
+# ** (RuntimeError) giving up
+
+# iex(1)> raise RuntimeError, message: "This is the override message"
+# ** (RuntimeError) This is the override message
+
+# Types and the @spec module
+# @spec module allows documenting types in a nice readable way for inline and for other usage.
+
+# What are the elixir types?
+# any, atom, char_list (single quote string), float, fun, integer, map, none, pid, port, reference, and tuple.
+
+# Note also that you can use as_boolean(T), for example, for truthiness
+
+# Definining new types: The @type syntax can be used to define new types
+# predefined examples:
+# @type boolean :: false | true
+# @type byte :: 0..255
+# @type list :: [ any ]
+
+# and can be parameterized
+# @type list(t) :: [ t ]  
+# @type list(integer) is another example?
+
+# See notes here for a list of types
+# https://hexdocs.pm/elixir/typespecs.html#notes
+
+# types can also be privatized or opauqe (sem-pseudo visible)
+# @typep
+# @opaque
+
+# type spec with functions: !!! IMPORTANT !!!
+
+# @spec function_name(param1_type, ...) :: return_type
+# actual function definition
+
+# what about t
+# it might stand for collection? type of a collection?
+
+# Types enable gaurding using Dialyzer, from the erlang days
+
